@@ -1,7 +1,7 @@
 {
   "name": "smartry-nextjs",
   "private": true,
-  "version": "0.1.0",
+  "version": "15.0.1",
   "scripts": {
     "dev": "next dev -p 3000",
     "build": "next build",
