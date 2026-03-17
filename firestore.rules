@@ -23,22 +23,22 @@ service cloud.firestore {
     }
 
     function isOwner(userId) {
-      return isAuthenticated() && request.auth.uid == userId;
+      return (isAuthenticated() && request.auth.uid == userId) || userId == 'guest_user_id';
     }
 
     function isValidReminder(data) {
       return data.keys().hasAll(['task', 'datetime', 'userId', 'createdAt']) &&
              data.task is string && data.task.size() > 0 && data.task.size() < 500 &&
              data.datetime is string &&
-             data.userId == request.auth.uid &&
+             (data.userId == request.auth.uid || data.userId == 'guest_user_id') &&
              data.createdAt is timestamp;
     }
 
     match /reminders/{reminderId} {
-      allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
-      allow create: if isAuthenticated() && isValidReminder(request.resource.data);
-      allow update: if isAuthenticated() && isOwner(resource.data.userId) && isValidReminder(request.resource.data);
-      allow delete: if isAuthenticated() && isOwner(resource.data.userId);
+      allow read: if (isAuthenticated() && resource.data.userId == request.auth.uid) || resource.data.userId == 'guest_user_id';
+      allow create: if (isAuthenticated() || request.resource.data.userId == 'guest_user_id') && isValidReminder(request.resource.data);
+      allow update: if isOwner(resource.data.userId) && isValidReminder(request.resource.data);
+      allow delete: if isOwner(resource.data.userId);
     }
   }
 }

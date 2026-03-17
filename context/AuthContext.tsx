@@ -17,7 +17,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (u) => {
-      setUser(u);
+      if (u) {
+        setUser(u);
+      } else {
+        // Temporary Guest User
+        setUser({
+          uid: 'guest_user_id',
+          displayName: 'Guest User',
+          email: 'guest@example.com',
+          photoURL: null,
+        } as any);
+      }
       setLoading(false);
     });
     return unsubscribe;
