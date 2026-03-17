@@ -12,6 +12,7 @@ import { signIn, db } from '@/lib/firebase';
 import { collection, query, where, orderBy, onSnapshot } from 'firebase/firestore';
 import Link from 'next/link';
 import { Logo } from '@/components/Logo';
+import { SmartInput } from '@/components/SmartInput';
 
 export default function Dashboard() {
   const { user, loading } = useAuth();
@@ -82,49 +83,32 @@ export default function Dashboard() {
         </div>
       </header>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        {/* Main Action */}
-        <motion.div
-          whileHover={{ scale: 1.01 }}
-          whileTap={{ scale: 0.98 }}
-          className="lg:col-span-8"
-        >
-          <Link 
-            href="/assistant" 
-            className="relative overflow-hidden p-10 bg-[#ff4e00] rounded-[3rem] group cursor-pointer flex flex-col justify-between min-h-[320px] shadow-2xl shadow-[#ff4e00]/20 w-full h-full block"
-          >
-            <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl group-hover:scale-110 transition-transform duration-700" />
-            <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-md">
-              <Mic className="w-8 h-8 text-white" />
-            </div>
-            <div className="space-y-2 relative z-10">
-              <h3 className="text-4xl font-bold text-white tracking-tight">{t('talk_to_smarty')}</h3>
-              <p className="text-white/80 text-lg max-w-md">{t('start_voice_session')}</p>
-            </div>
-            <div className="flex items-center gap-2 text-white/60 font-medium group-hover:gap-4 transition-all">
-              <span>{t('start_session')}</span>
-              <ChevronRight className="w-5 h-5" />
-            </div>
-          </Link>
-        </motion.div>
+      <section className="space-y-6">
+        <SmartInput />
+      </section>
 
-        {/* Stats */}
-        <div className="lg:col-span-4 flex flex-col gap-6">
-          <motion.div 
-            whileHover={{ scale: 1.02 }}
-            className="flex-1 p-8 bg-white/5 border border-white/5 rounded-[2.5rem] flex flex-col justify-center space-y-2"
-          >
-            <p className="text-5xl font-light text-white">{reminders.length}</p>
-            <p className="text-xs text-[#e0d8d0]/30 uppercase tracking-[0.2em] font-bold">{t('active_reminders')}</p>
-          </motion.div>
-          <motion.div 
-            whileHover={{ scale: 1.02 }}
-            className="flex-1 p-8 bg-white/5 border border-white/5 rounded-[2.5rem] flex flex-col justify-center space-y-2"
-          >
-            <p className="text-5xl font-light text-white">{completedCount}</p>
-            <p className="text-xs text-[#e0d8d0]/30 uppercase tracking-[0.2em] font-bold">{t('completed_today')}</p>
-          </motion.div>
-        </div>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <motion.div 
+          whileHover={{ scale: 1.02 }}
+          className="p-8 bg-white/5 border border-white/5 rounded-[2.5rem] flex flex-col justify-center space-y-2"
+        >
+          <p className="text-5xl font-light text-white">{reminders.length}</p>
+          <p className="text-xs text-[#e0d8d0]/30 uppercase tracking-[0.2em] font-bold">{t('active_reminders')}</p>
+        </motion.div>
+        <motion.div 
+          whileHover={{ scale: 1.02 }}
+          className="p-8 bg-white/5 border border-white/5 rounded-[2.5rem] flex flex-col justify-center space-y-2"
+        >
+          <p className="text-5xl font-light text-white">{completedCount}</p>
+          <p className="text-xs text-[#e0d8d0]/30 uppercase tracking-[0.2em] font-bold">{t('completed_today')}</p>
+        </motion.div>
+        <motion.div 
+          whileHover={{ scale: 1.02 }}
+          className="p-8 bg-[#ff4e00]/10 border border-[#ff4e00]/20 rounded-[2.5rem] flex flex-col justify-center space-y-2"
+        >
+          <p className="text-5xl font-light text-[#ff4e00]">{reminders.filter(r => r.priority === 'high').length}</p>
+          <p className="text-xs text-[#ff4e00]/60 uppercase tracking-[0.2em] font-bold">{t('urgent_tasks_prefix')} Urgent</p>
+        </motion.div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 pt-4">

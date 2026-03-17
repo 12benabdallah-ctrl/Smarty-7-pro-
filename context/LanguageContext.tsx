@@ -54,6 +54,8 @@ const translations = {
     delete_confirm: "هل أنت متأكد أنك تريد حذف هذا التذكير؟",
     cancel: "إلغاء",
     delete: "حذف",
+    type_reminder_placeholder: "ذكرني بـ... (مثلاً: شراء الحليب غداً الساعة 10 صباحاً)",
+    parsing_text: "سمارتي يحلل طلبك...",
   },
   en: {
     welcome: "Welcome to Smartry",
@@ -98,6 +100,8 @@ const translations = {
     delete_confirm: "Are you sure you want to delete this reminder?",
     cancel: "Cancel",
     delete: "Delete",
+    type_reminder_placeholder: "Remind me to... (e.g., buy milk tomorrow at 10am)",
+    parsing_text: "Smarty is analyzing your request...",
   },
   fr: {
     welcome: "Bienvenue sur Smartry",
@@ -142,7 +146,9 @@ const translations = {
     delete_confirm: "Êtes-vous sûr de vouloir supprimer ce rappel ?",
     cancel: "Annuler",
     delete: "Supprimer",
-  }
+    type_reminder_placeholder: "Rappelle-moi de... (ex: acheter du lait demain à 10h)",
+    parsing_text: "Smarty analyse votre demande...",
+  },
 };
 
 const LanguageContext = createContext<LanguageContextType>({
